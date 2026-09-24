@@ -1,0 +1,133 @@
+📚 Aula 07 - NestJS
+
+Projeto desenvolvido na Aula 07 do curso de Programador Fullstack, utilizando o framework NestJS com TypeScript.
+
+🎯 Objetivo da aula
+
+Nesta aula foi criada uma estrutura básica de uma aplicação NestJS, trabalhando principalmente com:
+
+Controllers
+
+Services
+
+Injeção de dependência
+
+Rotas HTTP
+
+Decorators do NestJS
+
+Comunicação entre Controller e Service
+
+🛠️ Tecnologias utilizadas
+
+Node.js
+
+NestJS
+
+TypeScript
+
+npm
+
+📂 Estrutura do projeto
+
+aula07-nestjs/ └── src/ ├── app.controller.ts ├── app.service.ts └── app.module.ts
+
+⚙️ AppService
+
+No arquivo app.service.ts, foi criado o serviço responsável por retornar uma mensagem:
+
+import { Injectable } from '@nestjs/common';
+
+@Injectable() export class AppService { getHello(): string { return 'Servidor Nest.JS - aula 07 ativo!'; } }
+
+O decorator @Injectable() permite que o NestJS gerencie essa classe através do seu sistema de injeção de dependência.
+
+🎮 AppController
+
+No arquivo app.controller.ts, foi criado o controller responsável pela rota da API:
+
+import { Controller, Get } from '@nestjs/common'; import { AppService } from './app.service.js';
+
+@Controller('api') export class AppController { constructor(private readonly appService: AppService) {}
+
+@Get() getHello(): string { return this.appService.getHello(); } }
+
+Como funciona
+
+O controller possui a rota:
+
+GET /api
+
+Quando uma requisição é realizada, o método getHello() chama:
+
+this.appService.getHello();
+
+O resultado é retornado pelo AppService.
+
+▶️ Como executar
+
+Instalar as dependências
+No terminal, dentro da pasta do projeto:
+
+npm install
+
+Iniciar o servidor
+Para executar em modo de desenvolvimento:
+
+npm run start:dev
+
+Também é possível iniciar normalmente:
+
+npm run start
+
+🌐 Testando a aplicação
+
+Depois de iniciar o servidor, acesse:
+
+http://localhost:3000/api
+
+A resposta esperada será:
+
+Servidor Nest.JS - aula 07 ativo!
+
+📌 Conceitos aprendidos
+
+Controller
+
+O Controller recebe e trata as requisições HTTP.
+
+Neste projeto:
+
+@Controller('api')
+
+define o prefixo /api para a rota.
+
+GET
+
+O decorator:
+
+@Get()
+
+define que o método será executado através de uma requisição HTTP GET.
+
+Service
+
+O Service concentra a lógica da aplicação.
+
+Neste caso:
+
+getHello(): string { return 'Servidor Nest.JS - aula 07 ativo!'; }
+
+Injeção de dependência
+
+O AppService é injetado no AppController através do construtor:
+
+constructor(private readonly appService: AppService) {}
+
+Isso permite que o controller utilize os métodos do service.
+
+📋 Resultado
+
+A aplicação possui uma API simples funcionando com a seguinte estrutura:
+
+Cliente ↓ GET /api ↓ AppController ↓ AppService ↓ "Servidor Nest.JS - aula 07 ativo!"
