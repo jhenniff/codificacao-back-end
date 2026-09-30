@@ -1,0 +1,22 @@
+# 🚀 Aula 08 e 09: Métodos HTTP e Verbos REST
+
+Este módulo foi focado na criação de rotas e na compreensão dos verbos HTTP fundamentais para a construção de APIs RESTful utilizando o framework NestJS.
+
+---
+
+### 📌 Conteúdos Aprendidos e Praticados
+
+#### 1. Verbos HTTP e Responsabilidades
+* **`GET`**: Utilizado para buscar e listar informações cadastradas no servidor.
+* **`POST`**: Utilizado para criar novos registros na aplicação, enviando os dados através do corpo da requisição (*Request Body*).
+* **`PATCH` / `PUT`**: Utilizados para atualizar registros existentes. O `PATCH` realiza atualizações parciais de dados.
+* **`DELETE`**: Utilizado para remover registros do banco ou memória da aplicação.
+
+#### 2. Decoradores do NestJS
+* **`@Controller()`**: Define a rota base da classe controladora.
+* **`@Get()`, `@Post()`, `@Patch()`, `@Delete()`**: Maapeiam os endpoints para seus respectivos métodos HTTP.
+* **`@Body()`**: Extrai os dados enviados no corpo da requisição para serem processados nos serviços.
+
+#### 3. Testes de Endpoints
+* Utilização do cliente HTTP (**Insomnia** / **Postman**) para disparar requisições para `http://localhost:3000`.
+* Validação de respostas e status códigos HTTP (`200 OK`, `201 Created`, `404 Not Found`).
