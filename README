@@ -1,0 +1,22 @@
+ Aula 15 - Tratamento de Erros e Status Codes (NestJS)
+
+Nesta aula aprendemos a tratar erros HTTP e manipular os Status Codes nas rotas do NestJS, além de utilizar o serviço de logs interno do framework.
+
+O que foi feito:
+
+* Criação da Controller e Service de Produtos
+* `ProdutosService`: criação de uma lista mockada de produtos com o método `listarProdutos()`.
+* `ProdutosController`: criação do prefixo `'produtos'` e das rotas `@Get()` e `@Get(':id')`.
+
+
+* Tratamento de Exceções HTTP (`HttpException`)
+* `BadRequestException` (HTTP 400)Lançado quando o parâmetro `:id` enviado na URL não é um valor numérico válido (verificado via `isNaN(id)`).
+* `NotFoundException` (HTTP 404) Lançado quando o ID é numérico, mas não corresponde a nenhum produto cadastrado na lista.
+
+
+* Registro de Logs com `Logger`
+* Instanciação do `new Logger(ProdutosController.name)` para registrar mensagens de alerta (`this.logger.warn`) no terminal quando ocorrem erros de busca ou parâmetros inválidos.
+
+
+* Testes via Thunder Client
+* Teste da rota `GET localhost:3000/produtos/a` retornando o status 400 Bad Request com a mensagem personalizada "O ID do produto deve ser um numero inteiro."* e log no terminal.
