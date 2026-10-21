@@ -1,0 +1,12 @@
+# Aula 13 - Middlewares, Interceptors e Logger no NestJS
+
+## 🎯 Objetivos da Aula
+Implementar mecânicas do ecossistema NestJS para filtragem de requisições, transformação de dados e registo de mensagens no sistema (logging).
+
+## 🛠️ Conteúdo Praticado
+- **Middlewares:** Criação e configuração de *middlewares* para intercetar requisições antes que alcancem os controladores.
+- **Interceptors:** Implementação de intercetores para modificar a resposta das APIs e tratar exceções globalmente.
+- **Logger Service:** Registo e monitorização de logs e eventos da aplicação no terminal.
+
+## 🧪 Testes de API
+- Testes de tempo de resposta e logs intercetados durante as chamadas HTTP via **Insomnia**.
