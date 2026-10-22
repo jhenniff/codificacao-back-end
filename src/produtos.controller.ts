@@ -4,6 +4,7 @@ import { CriarProdutoDto } from "./produtos/dto/criar-produto.dto.js"
 @ApiTags("produtos")
 @Controller("produtos")
 export class ProdutosController {
+  
   @Post()
   @ApiOperation({ summary: "Cadastrar um novo produto no estoque" })
   @ApiResponse({ status: 201, description: "Produto cadastrado com sucesso." })
@@ -15,4 +16,5 @@ export class ProdutosController {
       criadoEm: new Date().toLocaleDateString(),
     };
   }
+
 }
