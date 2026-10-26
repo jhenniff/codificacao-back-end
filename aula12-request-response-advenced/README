@@ -1,0 +1,13 @@
+# Aula 12 - Request e Response Avançados no NestJS
+
+## 🎯 Objetivos da Aula
+Compreender e manipular em detalhe os objetos de requisição (`Request`) e resposta (`Response`) da aplicação HTTP utilizando o framework NestJS.
+
+## 🛠️ Conteúdo Praticado
+- **Decoradores Express / Fastify:** Utilização de `@Req()` e `@Res()` para controlo direto das respostas da aplicação.
+- **Códigos de Estado HTTP:** Configuração de *status codes* personalizados com `@HttpCode()`.
+- **Cabeçalhos (Headers):** Definição e leitura de cabeçalhos de requisição e resposta utilizando `@Header()`.
+- **Manipulação de Parâmetros:** Extração avançada de `@Param()`, `@Query()` e `@Body()`.
+
+## 🧪 Testes de API
+- Validação e execução das rotas utilizando a coleção de requisições no **Insomnia**.
