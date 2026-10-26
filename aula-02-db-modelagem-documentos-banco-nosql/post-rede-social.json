@@ -1,0 +1,15 @@
+{
+"texto": "Iniciando os estudos em modelagem de banco de dados",
+"autor": "Jamilly_barbosa",
+"data": "2026-10-20",
+"curtidas":[
+    {"nome":"emanuelly_gibson"},
+    {"nome": "gabriel_cardoso"},
+    {"nome":"vitoria_luane"}
+],
+"comentarios":[
+    {"autor": "emabuelly_gibson", "texto":"excelente!"},
+    {"autor": "vitoria_lluane", "testo": "farmou aura!"}
+    
+]
+}
