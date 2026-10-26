@@ -1,0 +1,10 @@
+Aula 17: Documentação Técnica com Swagger no NestJS
+Objetivo Principal: Disponibilizar uma interface visual e interativa (OpenAPI) para consulta e teste de todos os endpoints da aplicação.
+
+O que foi desenvolvido:
+
+Integração do @nestjs/swagger: Configuração do Swagger na raiz do projeto (main.ts) para disponibilizar a documentação interativa na rota /api.
+
+Decorators Descritivos: Utilização de decorators específicos (@ApiTags, @ApiOperation, @ApiResponse, @ApiProperty) para organizar as rotas por módulos e documentar os códigos de resposta HTTP.
+
+Mapeamento de DTOs e Entidades: Documentação das estruturas de dados esperadas nas requisições e respostas, permitindo testar requisições diretamente pelo navegador sem necessidade de ferramentas externas como o Insomnia.

@@ -1,0 +1,10 @@
+Aula 16: Validação de Schemas com Zod no NestJS
+Objetivo Principal: Garantir a integridade, segurança e tipagem estrita dos dados recebidos nas requisições da API através da biblioteca Zod integrada ao NestJS.
+
+O que foi desenvolvido: 
+
+Criação de Schemas com Zod: Definição de regras de validação rigorosas para os DTOs (Data Transfer Objects), garantindo tipos corretos, campos obrigatórios e formatos específicos (como e-mails válidos e limites de carateres).
+
+Pipes Personalizados de Validação: Construção de um ValidationPipe customizado para interceptar os dados de entrada (payloads) antes de chegarem aos controladores (controllers).
+
+Tratamento de Dados Inválidos: Configuração de respostas de erro automáticas e padronizadas (HTTP 400 - Bad Request) para informar detalhadamente ao cliente quais campos não cumpriram os requisitos do schema.
