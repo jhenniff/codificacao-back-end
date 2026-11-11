@@ -4,8 +4,10 @@ import { AlunoModule } from './alunos/alunos.module.js';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/escola_dbn'),
-    AlunoModule,
+    MongooseModule.forRoot('mongodb://localhost:27017/escola_dbn'),
+    AlunoModule
   ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
