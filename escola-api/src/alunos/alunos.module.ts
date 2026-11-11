@@ -13,3 +13,4 @@ import { Aluno, AlunoSchema } from '../schemas/aluno.schemas.js';
   providers: [AlunosService],
 })
 export class AlunoModule {}
+
