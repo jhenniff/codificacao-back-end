@@ -35,7 +35,7 @@ export class CreateAlunoDto {
 
 
     @ApiProperty({
-        example: '777',
+        example: '9999',
         description: 'Matrícula do aluno'
     })
     @IsString()
