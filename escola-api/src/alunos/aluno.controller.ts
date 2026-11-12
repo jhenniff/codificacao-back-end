@@ -45,7 +45,7 @@ export class AlunosController {
     // }
     @Get()
     @ApiOperation({
-        summary: 'Listar alunos com paginação'
+        summary: 'Listar alunos com paginação, filtros opcionais e ordenação',
     })
     @ApiResponse({
         status: 200,
@@ -61,36 +61,63 @@ export class AlunosController {
         description: 'Erro interno do servidor',
     })
     @ApiQuery({
-        name: 'nome',
-        required: false,
-        type: String,
-        description: 'Filtrar alunos pelo nome (Ex: joão)',
-    })
-    @ApiQuery({
-        name: 'curso',
-        required: false,
-        type: String,
-        description: 'Filtrar alunos pelo nome (Ex: Eng. Minas)',
-    })
-    @ApiQuery({
         name: 'page',
         required: false,
         type: Number,
         description: 'Número da página  (padrão: 1)',
     })
     @ApiQuery({
-        name: 'limit ',
+        name: 'limit',
         required: false,
         type: Number,
         description: 'Número de itens por pagina página  (padrão: 10)',
     })
-     findPage(
+
+
+    @ApiQuery
+   ( {
+        name:'nome',
+        required: false,
+        type: String,
+        description:'Filtrar alunos pelo nome (Ex: Jamilly),'
+    })
+
+@ApiQuery
+   ( {
+        name:'curso',
+        required: false,
+        type: String,
+        description:'Filtrar alunos pelo curso (Ex: Engenharia civil),'
+    })
+    @ApiQuery({
+        name: 'orderBy',
+        required: false,
+        type: String,
+        description: 'campos (ex: nome, idade, matricula, cursos)', 
+    })
+    @ApiQuery({
+        name: 'orderDirection',
+        required: false,
+        enum: ['asc', 'desc'],
+        description: '(asc) para Crescente e (desc) para Decrescente ',
+    })
+
+     findPagefilter(
         @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
         @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
-        @Query('nome') nome?: string,
+        @Query('nome')nome?: string,
         @Query('curso') curso?: string,
+        @Query('orderBy') orderBy?: string,
+        @Query('orderDirection') orderDirection?: 'asc' | 'desc',
+
+
     ){
-        return this.alunoService.findPage(page, limit, nome, curso);
+        return this.alunoService.findPagefilter(page,
+             limit,
+              nome,
+               curso,
+                orderBy,
+                 orderDirection);
      }
 
 
