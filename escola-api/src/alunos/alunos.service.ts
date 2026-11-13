@@ -1,48 +1,68 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateAlunoDto } from './dto/create-aluno.dto.js';
 import { UpdateAlunoDto } from './dto/update-aluno.dto.js';
 import { Aluno, AlunoDoc } from '../schemas/aluno.schemas.js';
+import { MongoServerError } from 'mongodb';
 
 @Injectable()
 export class AlunosService {
     constructor(@InjectModel(Aluno.name) private alunoModel: Model<AlunoDoc>){}
 
     async create(createAlunoDto: CreateAlunoDto):Promise<Aluno>{
+        try{
         const createdAluno = new this.alunoModel(createAlunoDto);
-        return createdAluno.save(); //!POST
+        return await createdAluno.save(); //!POST
+        }catch(error: unknown){
+            if(
+                error instanceof MongoServerError
+                &&
+                error.code === 11000
+            ){
+                throw new ConflictException('Ja existe aluno cadastrado com essa matricula')
+            }
+            throw new InternalServerErrorException ('Erro ao processar o cadastro do aluno');
+        }
     }
 
     // async findAll(): Promise<Aluno[]>{
     //     return this.alunoModel.find().exec();
     // } //!GET
-
     //! MÉTODO PARA BUSCAR ALUNOS COM PAGINAÇÃO
-    async findPagefilter(
-        page: number,
-         limit: number, 
-         nome?: string,
-          curso?: string,
+    async findPagefilter
+    
+    (page: number,
+         limit: number,
+          nome?: string,
+           curso?: string,
           orderBy?: string,
-          orderDirection?: 'asc' | 'desc',){
+          orderDirection?:'asc'| 'desc',)
+          {
+
         const skip = (page - 1) * limit;
         const filter: any = {};
         const sort: any = {};
 
-        if(nome){
-            filter.nome = {
-                $regex: new RegExp(nome, 'i'),
-            };
-        }
-        if (curso){
-            filter.cursos = curso;
-        }
-        if(orderBy){
-            sort[orderBy] = orderDirection === 'desc' ? -1 : 1;
-        }
+
+       if (nome) {
+  filter.nome = {
+     $regex: nome, $options: 'i' };
+}
+
+
+if (curso) {
+  filter.cursos = curso;
+}
+if(orderBy){
+    sort[orderBy] = orderDirection === 'desc' ? -1 : 1;
+}
+
+
+
+            
         const [data, total] = await Promise.all([
-            this.alunoModel.find(filter).sort(sort).skip(skip).limit(limit).exec(),
+             this.alunoModel.find(filter).sort(sort).skip(skip).limit(limit).exec(),
             this.alunoModel.countDocuments(filter).exec(),
         ]);
         return {
@@ -82,8 +102,7 @@ export class AlunosService {
         const alunoRemovido = await this.alunoModel.findByIdAndDelete(id).exec();
         
         if(!alunoRemovido){
-            throw new NotFoundException(`Aluno com id ${id} não encontrado.`);
-        }
+            throw new NotFoundException(`Aluno com id ${id} não encontrado.`); }
 
         return alunoRemovido;
     
