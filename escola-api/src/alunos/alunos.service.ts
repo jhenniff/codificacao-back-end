@@ -1,14 +1,18 @@
-import { Injectable, NotFoundException, ConflictException, InternalServerErrorException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { CreateAlunoDto } from './dto/create-aluno.dto.js';
-import { UpdateAlunoDto } from './dto/update-aluno.dto.js';
-import { Aluno, AlunoDoc } from '../schemas/aluno.schemas.js';
-import { MongoServerError } from 'mongodb';
+import { Injectable,
+     NotFoundException,
+    ConflictException,
+    InternalServerErrorException
+} from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { CreateAlunoDto } from "./dto/create-aluno.dto.js";
+import { UpdateAlunoDto } from "./dto/update-aluno.dto.js";
+import { Aluno,alunoDoc } from "../schemas/aluno.schemas.js";
+import{MongoServerError} from 'mongodb';
 
 @Injectable()
 export class AlunosService {
-    constructor(@InjectModel(Aluno.name) private alunoModel: Model<AlunoDoc>){}
+    constructor(@InjectModel(Aluno.name) private alunoModel: Model<alunoDoc>){}
 
     async create(createAlunoDto: CreateAlunoDto):Promise<Aluno>{
         try{
@@ -41,7 +45,7 @@ export class AlunosService {
           {
 
         const skip = (page - 1) * limit;
-        const filter: any = {};
+        const filter: any = {ativo:true};
         const sort: any = {};
 
 
@@ -78,7 +82,9 @@ if(orderBy){
     }
 
     async findOne(id:string):Promise< Aluno >{
-        const aluno = await this.alunoModel.findById(id).exec();
+        //const aluno = await this.alunoModel.findByIdAndUpdate(id,{ativo:false}, {new:true}).exec();
+const aluno = await this.alunoModel.findOne({id: id, ativo:true}).exec();
+
 
         if(!aluno){
             throw new NotFoundException(`Aluno com id ${id} não encontrado.`);
@@ -99,7 +105,7 @@ if(orderBy){
         return alunoAtualizado;
     } //!PATCH
     async remove(id: string): Promise<Aluno>{
-        const alunoRemovido = await this.alunoModel.findByIdAndDelete(id).exec();
+        const alunoRemovido = await this.alunoModel.findByIdAndUpdate(id,{ativo:false}, {new:true}).exec();
         
         if(!alunoRemovido){
             throw new NotFoundException(`Aluno com id ${id} não encontrado.`); }
@@ -107,5 +113,11 @@ if(orderBy){
         return alunoRemovido;
     
     } //!DELETE
-    //!CRUD
+    async restore(id: string):Promise<Aluno>{
+        const alunoRestaurado = await this.alunoModel.findByIdAndUpdate(id,{ativo:true}, {new:true}).exec();
+if(!alunoRestaurado){
+    throw new NotFoundException(`Aluno nao encontrado pelo ID ${id}`)
+}
+return alunoRestaurado;
+    }
 }
