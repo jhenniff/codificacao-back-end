@@ -45,7 +45,7 @@ export class AlunosController {
     // }
     @Get()
     @ApiOperation({
-        summary: 'Listar alunos com paginação, filtros opcionais e ordenação',
+        summary: 'Listar alunos com paginação,filtros opcionais e ordenação'
     })
     @ApiResponse({
         status: 200,
@@ -89,18 +89,28 @@ export class AlunosController {
         type: String,
         description:'Filtrar alunos pelo curso (Ex: Engenharia civil),'
     })
+
+
+
+
+
     @ApiQuery({
         name: 'orderBy',
         required: false,
         type: String,
-        description: 'campos (ex: nome, idade, matricula, cursos)', 
+        description: 'Campos (Ex:nome,idade,matricula e curso'
     })
     @ApiQuery({
         name: 'orderDirection',
         required: false,
-        enum: ['asc', 'desc'],
-        description: '(asc) para Crescente e (desc) para Decrescente ',
+        enum:[
+'asc',
+'desc',
+        ],
+        description:'(asc) para crescente e (desc) para decrescente'
     })
+
+
 
      findPagefilter(
         @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
@@ -110,14 +120,14 @@ export class AlunosController {
         @Query('orderBy') orderBy?: string,
         @Query('orderDirection') orderDirection?: 'asc' | 'desc',
 
-
     ){
-        return this.alunoService.findPagefilter(page,
+        return this.alunoService.findPagefilter
+        (page,
              limit,
-              nome,
-               curso,
-                orderBy,
-                 orderDirection);
+             nome,
+             curso,
+            orderBy,
+        orderDirection);
      }
 
 
@@ -133,4 +143,26 @@ export class AlunosController {
     remove(@Param('id') id: string){
         return this.alunoService.remove(id);
     }
+
+    @Patch (':id/restaurar')
+    @ApiOperation({
+        summary:'Restaura um aluno especifico removido por Soft Delete',
+    })
+
+@ApiResponse({
+    status:200,
+    description:'Aluno restaurado',
+
+})
+@ApiResponse({
+    status:404,
+    description:'Aluno não encontrado',
+})
+@ApiResponse({
+    status:500,
+    description:'Erro no servidor'
+})
+restore(@Param('id') id: string){
+    return this.alunoService.restore(id);
+}
 }
