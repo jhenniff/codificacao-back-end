@@ -1,18 +1,46 @@
-import { Injectable,
+import { Injectable, Inject,
      NotFoundException,
     ConflictException,
-    InternalServerErrorException
-} from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
+    InternalServerErrorException, }
+ from "@nestjs/common";
+import { InjectModel, } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { CreateAlunoDto } from "./dto/create-aluno.dto.js";
 import { UpdateAlunoDto } from "./dto/update-aluno.dto.js";
 import { Aluno,alunoDoc } from "../schemas/aluno.schemas.js";
 import{MongoServerError} from 'mongodb';
+import { ConfigService } from "@nestjs/config";
+import {variaveisDeAmbiente} from '../config/env.config.js';
+import type { ConfigType } from "@nestjs/config";
+import databaseConfig from "../config/database.config.js";
+import  AuthConfig from "../config/auth.config.js";
 
 @Injectable()
 export class AlunosService {
-    constructor(@InjectModel(Aluno.name) private alunoModel: Model<alunoDoc>){}
+    constructor(
+        @InjectModel(Aluno.name) private alunoModel: Model<alunoDoc>,
+            private readonly configService: ConfigService<variaveisDeAmbiente, true>,
+        @Inject(databaseConfig.KEY) private dbconfig: ConfigType<typeof databaseConfig>){
+          console.log(`conectado em: ${this.dbconfig.uri}`);
+          console.log(`Pool Máximo: ${this.dbconfig.maxPoolSize}`);
+
+    }
+
+
+ configuracaoDeAmbiente(){
+    const nodeEnv: string = this.configService.get('NODE_ENV',{
+        infer: true,
+    });
+    const port = this.configService.get('PORT', {
+        infer: true,
+    });
+    const databaseUri: string = this.configService.get('DATABASE_URI',{
+        infer: true,
+    });
+    const jwtSecret: string = this.configService.get('JWT_SECRET',{
+        infer: true,
+    });
+            }
 
     async create(createAlunoDto: CreateAlunoDto):Promise<Aluno>{
         try{
