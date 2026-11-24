@@ -5,6 +5,7 @@ import { AlunosController } from './aluno.controller.js';
 import { AlunosService } from './alunos.service.js';
 import { Aluno, Alunoschema } from '../schemas/aluno.schemas.js';
 
+
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Aluno.name, schema: Alunoschema }]),
